@@ -1,0 +1,757 @@
+---
+title: "A (nonrandom) sample of medical statistics"
+execute: 
+  echo: false
+  cache: true
+  warning: false
+  message: false
+  eval: true
+format: 
+  revealjs:
+    theme: dark
+    progress: true
+    incremental: true
+author: "Lily Koffman" 
+date: "March 2024"
+---
+
+## Introduction
+:::: {.columns}
+
+::: {.column width="60%"}
+
+![](figs/does_it_work.jpeg){width=65%}
+
+:::
+
+::: {.column width="40%"}
++ Tests 
++ P-values
++ Study design
+:::
+::::
+
+## Tests {.smaller}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+**Four** possible outcomes of a test
+
++ True positive (TP): have disease, test positive
++ True negative (TN): healthy, test negative
++ False positive (FP): healthy, test positive
++ False negative (FN): have disease, test negative 
+
+:::
+
+::: {.column width="50%"}
+
+
++ Sensitivity: how good is a test at identifying the sick? 
+  + Probability that test is positive if person is sick (TP/(TP + FN))
+  + False negative rate: 1-sensitivity 
++ Specificity: how good is a test at identifying the healthy? 
+  + Probability test is negative if person is healthy (TN/(FN + TN))
+  + False positive rate: 1-specificity
+  
+:::
+
+:::: 
+
+## Sensitivity specificity tradeoff 
+
+![Sahagun, *J. Med. Toxicol*, 2023](figs/sens_spec_g2.png){fig-align="left"}
+
+---
+
+## Casscells, *N Engl J Med*, 1978
+
+
+![<https://www.nejm.org/doi/10.1056/NEJM197811022991808>](figs/interp.png)
+
+
+## Interpreting a lab result {.smaller}
+:::: {.columns}
+
+::: {.column width="60%"}
+
+If a test to detect a disease whose prevalence is 1/1000 has a false positive rate of 5 per cent, what is the chance that a person found to have a positive result actually has the disease, assuming that you know nothing about the person's symptoms or signs?
+
+a) $< 5 \%$ 
+a) $5-10\%$
+a) $11-50\%$
+a) $51-80\%$
+a) $> 95\%$ 
+:::
+
+::: {.column width="40%"}
+![](figs/lilykoffman075.png)
+<https://pollev.com/lilykoffman075>
+
+OR text lilykoffman075 to 22333
+
+18$\%$ - four of 20 fourth-year students, three of 20 internal med residents, and four of 20 attending physicians answered correctly
+
+:::
+
+::::
+
+## {background-iframe="https://embed.polleverywhere.com/multiple_choice_polls/cW5a12CK8LI8TVHav0aoy?controls=none&short_poll=true"}
+
+---
+
+## Illustration 
+
+**1000 individuals** 
+
+```{r}
+library(tidyverse)
+set.seed(123)
+rand_nums = runif(1000, 0, 20)
+x = seq(1,1000,1)
+
+color_ind = c(1, rep(0, 999))
+
+df = bind_cols(y = rand_nums, x = x) 
+
+df %>% 
+  ggplot(aes(x = x, y = y)) + 
+  geom_point(size = .9) + 
+  theme_classic()+
+  theme(axis.text = element_blank(),
+        axis.title = element_blank(),
+        axis.ticks = element_blank())
+
+  
+```
+
+---
+
+**1** person has disease, **999** people do not have the disease
+
+```{r}
+color_ind2 = c(1, rep(0, 999))
+df %>% 
+  bind_cols(color = color_ind2) %>% 
+  ggplot(aes(x = x, y = y, color = as.factor(color), size = as.factor(color))) + 
+  geom_point() + 
+  scale_color_manual(values = c("0" = "black", "1" = "#E51932"), labels = c("Healthy", "Sick"))+
+  scale_size_manual(values = c("1"= 2, "0" = .9), labels = c("Healthy", "Sick"))+
+  theme_classic()+
+  theme(axis.text = element_blank(),
+        axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position = "bottom",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 15))
+
+
+```
+
+---
+
+False positive rate is 5$\%$ (specificity is 95$\%$)
+
+$0.05 \cdot 999 \approx 50$ healthy people test positive
+
+
+
+```{r}
+color_ind2 = c(1, rep(2, 50), rep(0, 949))
+df %>% 
+  bind_cols(color = color_ind2) %>% 
+  ggplot(aes(x = x, y = y, color = as.factor(color), size = as.factor(color))) + 
+  geom_point() + 
+  scale_color_manual(values = c("0" = "black", "1" = "#E51932", "2" = "#19B2FF"),
+                     labels = c("Healthy (true negative)", "Sick (true positive)", "Healthy (false positive)"))+
+  scale_size_manual(values = c("0" = 0.9, "1" = 2, "2" = 2),
+                    labels = c("Healthy (true negative)", "Sick (true positive)", "Healthy (false positive)"))+
+  theme_classic()+
+  theme(axis.text = element_blank(),
+        axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position = "bottom",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 15))
+
+```
+
+---
+
+
+```{r}
+color_ind2 = c(1, rep(2, 50), rep(0, 949))
+df %>% 
+  bind_cols(color = color_ind2) %>% 
+  ggplot(aes(x = x, y = y, color = as.factor(color), size = as.factor(color))) + 
+  geom_point() + 
+  scale_color_manual(values = c("0" = "black", "1" = "#E51932", "2" = "#19B2FF"),
+                     labels = c("Healthy (true negative)", "Sick (true positive)", "Healthy (false positive)"))+
+  scale_size_manual(values = c("0" = 0.9, "1" = 2, "2" = 2),
+                    labels = c("Healthy (true negative)", "Sick (true positive)", "Healthy (false positive)"))+
+  theme_classic()+
+  theme(axis.text = element_blank(),
+        axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position = "bottom",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 15))
+
+```
+
+Probability that a person who tests positive has the disease: $\frac{1}{51} = 2\%$
+
+## How to use tests, then? 
+
++ PPV: how often someone who tests positive is actually sick
++ NPV: how often someone who tests negative is actually healthy
++ Both depend on prevalence 
++ As prevalence increases, NPV $\uparrow$, PPV $\downarrow$
+
+
+## Illustration with increased prevalence
+
+Prevalence is 50/1000 instead of 1/1000
+
+```{r}
+
+color_ind2 = c(rep(1, 50), rep(0, 950))
+df %>% 
+  bind_cols(color = color_ind2) %>% 
+  ggplot(aes(x = x, y = y, color = as.factor(color), size = as.factor(color))) + 
+  geom_point() + 
+  scale_color_manual(values = c("0" = "black", "1" = "#E51932"),
+                     labels = c("Healthy", "Sick"))+
+  scale_size_manual(values = c("1"= 2, "0" = .9),
+                    labels = c("Healthy", "Sick"))+
+  theme_classic()+
+ theme(axis.text = element_blank(),
+        axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position = "bottom",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 15))
+
+  
+
+```
+
+---
+
+$950\cdot0.05 = 48$ healthy people test positive
+
+```{r}
+
+color_ind2 = c(rep(1, 50), rep(2, 48), rep(0, 902))
+df %>% 
+  bind_cols(color = color_ind2) %>% 
+  ggplot(aes(x = x, y = y, color = as.factor(color), size = as.factor(color))) + 
+  geom_point() + 
+  scale_color_manual(values = c("0" = "black", "1" = "#E51932", "2" = "#19B2FF"),
+                     labels = c("Healthy (true negative)", "Sick (true positive)", "Healthy (false positive)"))+
+  scale_size_manual(values = c("0" = 0.9, "1" = 2, "2" = 2),
+                    labels = c("Healthy (true negative)", "Sick (true positive)", "Healthy (false positive)"))+
+  theme_classic()+
+   theme(axis.text = element_blank(),
+        axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position = "bottom",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 15))
+
+```
+
+Probability person who tests positive has the disease: $\frac{50}{50+48} = 51\%$
+
+## How to increase PPV? 
+
++ Repeat test
+  + Probability of of healthy person testing positive twice: $0.05\cdot0.05 = 0.0025$
++ There will be $999\cdot 0.0025 \approx 2-3$ false positives
+
+---
+
+```{r}
+
+color_ind2 = c(rep(1, 1), rep(2, 3), rep(0, 996))
+df %>% 
+  bind_cols(color = color_ind2) %>% 
+  ggplot(aes(x = x, y = y, color = as.factor(color), size = as.factor(color))) + 
+  geom_point() + 
+  scale_color_manual(values = c("0" = "black", "1" = "#E51932", "2" = "#19B2FF"),
+                     labels = c("Healthy (true negative)", "Sick (true positive)", "Healthy (false positive)"))+
+  scale_size_manual(values = c("0" = 0.9, "1" = 2, "2" = 2),
+                    labels = c("Healthy (true negative)", "Sick (true positive)", "Healthy (false positive)"))+
+  theme_classic()+
+  theme(axis.text = element_blank(),
+        axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position = "none")
+
+```
+
+Probability that a person who tests positive has the disease: $\frac{1}{4} = 25\%$
+
+
+## Panel of tests on healthy individual 
+
+Probability of false positive = $5\%$
+
+Probability all tests are normal = $(0.95)^{20} = 36\%$
+
+---
+
+```{r}
+set.seed(123)
+df2 = 
+  replicate(n = 50, rbernoulli(20, 0.05)) %>% t() %>% as.data.frame() %>% 
+  mutate(id = seq(1,50,1)) %>% 
+  pivot_longer(cols = -id) 
+  
+
+df2 %>% 
+  mutate(value = ifelse(id==1, value, NA)) %>% 
+  ggplot(aes(y = id, x = name))+
+  geom_tile(aes(fill = value), col = "black")+
+  theme_classic()+
+  scale_x_discrete(labels=seq(1,20,1))+
+  theme(axis.text.y = element_blank(),
+        legend.position= "bottom",
+        legend.text = element_text(size = 15),
+        legend.title = element_text(size = 16))+
+  labs(x = "Test", y = "")+
+  scale_fill_manual(values = c("FALSE" = "#264DFF", "TRUE" = "#F76D5E"),
+                    na.value = "#FFFFFF", 
+                    name = "Test Result", labels = c("True negative", "False positive"))
+
+
+```
+
+---
+
+```{r}
+df2 %>% 
+  mutate(value = ifelse(id%in%c(1:2), value, NA)) %>% 
+  ggplot(aes(y = id, x = name))+
+  geom_tile(aes(fill = value), col = "black")+
+  theme_classic()+
+  scale_x_discrete(labels=seq(1,20,1))+
+  theme(axis.text.y = element_blank(),
+        legend.position= "bottom",
+         legend.text = element_text(size = 15),
+        legend.title = element_text(size = 16))+
+  labs(x = "Test", y = "")+
+  scale_fill_manual(values = c("FALSE" = "#264DFF", "TRUE" = "#F76D5E"),
+                    na.value = "#FFFFFF", 
+                    name = "Test Result", labels = c("True negative", "False positive"))
+```
+
+---
+
+```{r}
+df2 %>% 
+  mutate(value = ifelse(id%in%c(1:3), value, NA)) %>% 
+  ggplot(aes(y = id, x = name))+
+  geom_tile(aes(fill = value), col = "black")+
+  theme_classic()+
+  scale_x_discrete(labels=seq(1,20,1))+
+  theme(axis.text.y = element_blank(),
+        legend.position= "bottom",
+         legend.text = element_text(size = 15),
+        legend.title = element_text(size = 16))+
+  labs(x = "Test", y = "")+
+  scale_fill_manual(values = c("FALSE" = "#264DFF", "TRUE" = "#F76D5E"),
+                    na.value = "#FFFFFF", 
+                    name = "Test Result", labels = c("True negative", "False positive"))
+```
+
+---
+
+```{r}
+df2 %>% 
+  mutate(value = ifelse(id%in%c(1:5), value, NA)) %>% 
+  ggplot(aes(y = id, x = name))+
+  geom_tile(aes(fill = value), col = "black")+
+  theme_classic()+
+  scale_x_discrete(labels=seq(1,20,1))+
+  theme(axis.text.y = element_blank(),
+        legend.position= "bottom",
+         legend.text = element_text(size = 15),
+        legend.title = element_text(size = 16))+
+  labs(x = "Test", y = "")+
+  scale_fill_manual(values = c("FALSE" = "#264DFF", "TRUE" = "#F76D5E"),
+                    na.value = "#FFFFFF", 
+                    name = "Test Result", labels = c("True negative", "False positive"))
+```
+
+---
+
+```{r}
+df2 %>% 
+  ggplot(aes(y = id, x = name))+
+  geom_tile(aes(fill = value), col = "black")+
+  theme_classic()+
+  scale_x_discrete(labels=seq(1,20,1))+
+  theme(axis.text.y = element_blank(),
+        legend.position= "bottom",
+         legend.text = element_text(size = 15),
+        legend.title = element_text(size = 16))+
+  labs(x = "Test", y = "")+
+  scale_fill_manual(values = c("FALSE" = "#264DFF", "TRUE" = "#F76D5E"),
+                    na.value = "#FFFFFF", 
+                    name = "Test Result", labels = c("True negative", "False positive"))
+```
+
+
+# P-values  
+
+![<https://xkcd.com/1478/>](figs/p_values.png)
+
+## P-values in the wild 
+
+
+![Leinweiber, *J Vasc Surg*, 2023](figs/paper.png){fig-align="left"}
+
+## P-values in the wild
+
+
+![](figs/paper copy.png)
+
+---
+
+## How do we get them? {.smaller}
+
++ Specify null hypothesis
+  + In this case: no difference in between men, women in mean aneurysm diameter
++ Compare the groups
+  + In this case: compare aneurysm size 
++ Calculate probability of observing difference (or larger difference) than what we observe, **assuming there is no true difference between the groups**
++ If the probability is small, reject the null and have evidence that there is a difference in means between the groups 
+
+## Does sample size matter? 
+
+```{r}
+
+set.seed(123)
+sample = 
+  bind_cols(men = rnorm(10, mean = 27, sd = 5),
+            women = rnorm(10, mean = 22.5, sd = 4),
+            n = rep(10, 10)) %>% 
+  bind_rows(bind_cols(men = rnorm(50, mean = 27, sd = 5),
+            women = rnorm(50, mean = 22.5, sd = 4),
+            n = rep(50, 50))) %>% 
+  bind_rows(bind_cols(men = rnorm(100, mean = 27, sd = 5),
+            women = rnorm(100, mean = 22.5, sd = 4),
+            n = rep(100, 100))) %>% 
+  bind_rows(bind_cols(men = rnorm(200, mean = 27, sd = 5),
+            women = rnorm(200, mean = 22.5, sd = 4),
+            n = rep(200, 200))) %>% 
+  bind_rows(bind_cols(men = rnorm(1000, mean = 27, sd = 5),
+            women = rnorm(1000, mean = 22.5, sd = 4),
+            n = rep(1000, 1000)))
+labs = paste("n =", c(10, 50, 100, 200, 1000))
+names(labs) = c(10,50,100,200,1000)
+
+pvals = 
+  sample %>% 
+  group_by(n) %>% 
+  summarize(p = format.pval(t.test(men, women)$p.value, digits = 2))
+sample %>% 
+  pivot_longer(men:women) %>% 
+  ggplot(aes(x = value))+
+  geom_density(aes(fill = name, color = name), alpha = .8)+
+  facet_wrap(.~n, nrow = 1, labeller = labeller(n = labs))+
+  theme_bw()+
+  scale_color_manual(values = c("men" = "#FF7F00", "women" = "#654CFF"),
+                     labels = c("Men: mean = 27.5mm", "Women: mean = 22mm"),
+                     name = "")+
+   scale_fill_manual(values = c("men" = "#FF7F00", "women" = "#654CFF"),
+                     labels = c("Men: mean = 27.5mm", "Women: mean = 22mm"),
+                     name = "")+
+  theme(legend.position = "bottom",
+        legend.text = element_text(size = 15),
+        strip.text = element_text(size = 15),
+        axis.title = element_text(size = 16))+
+  labs(x = "Aneurysm Diameter (mm)", y = "Density")+
+  geom_label(data = pvals, aes(x = 25, y = .12, label = paste0("p = ", p)))
+  
+
+```
+
+
+
+## Which p-value would you "prefer"? 
+
+```{r}
+set.seed(123)
+
+df = bind_cols(men = rnorm(1000, mean = 22, sd = 2),
+            women = rnorm(1000, mean = 22.5, sd = 2))
+p = format.pval(t.test(df$men, df$women)$p.value, digits = 2)
+df %>% 
+  pivot_longer(cols = everything()) %>% 
+  ggplot(aes(x = value))+
+  geom_density(aes(fill = name, color = name), alpha = .8)+
+  # facet_wrap(.~n, nrow = 1, labeller = labeller(n = labs))+
+  theme_bw()+
+  scale_color_manual(values = c("men" = "#860086", "women" = "#008600"),
+                     labels = c("Group 1: mean = 22mm", "Group 2: mean = 22.5mm"),
+                     name = "")+
+   scale_fill_manual(values = c("men" = "#860086", "women" = "#008600"),
+                      labels = c("Group 1: mean = 22mm", "Group 2: mean = 22.5mm"),
+                     name = "")+
+  theme(legend.position = "bottom",
+        legend.text = element_text(size = 15),
+        strip.text = element_text(size = 15),
+        axis.title = element_text(size = 16),
+        plot.title = element_text(size = 16))+
+  labs(x = "Aneurysm Diameter (mm)", y = "Density", title = paste0("P value = ", p))+
+  scale_x_continuous(breaks=seq(15,30,2))
+  # geom_label(data = pvals, aes(x = 25, y = .12, label = paste0("p = ", p)))
+
+```
+
+
+## Which p-value would you "prefer"? 
+
+```{r}
+set.seed(123)
+df = bind_cols(men = rnorm(50, mean = 22, sd = 8),
+            women = rnorm(50, mean = 27, sd = 8))
+p = format.pval(t.test(df$men, df$women)$p.value, digits = 2)
+df %>% 
+  pivot_longer(cols = everything()) %>% 
+  ggplot(aes(x = value))+
+  geom_density(aes(fill = name, color = name), alpha = .8)+
+  # facet_wrap(.~n, nrow = 1, labeller = labeller(n = labs))+
+  theme_bw()+
+  scale_color_manual(values = c("men" = "#860086", "women" = "#008600"),
+                     labels = c("Group 1: mean = 22mm", "Group 2: mean = 27mm"),
+                     name = "")+
+   scale_fill_manual(values = c("men" = "#860086", "women" = "#008600"),
+                      labels = c("Group 1: mean = 22mm", "Group 2: mean = 27mm"),
+                     name = "")+
+  theme(legend.position = "bottom",
+        legend.text = element_text(size = 15),
+        strip.text = element_text(size = 15),
+        axis.title = element_text(size = 16),
+        plot.title = element_text(size = 16))+
+  labs(x = "Aneurysm Diameter (mm)", y = "Density", title = paste0("P value = ", p))+
+  scale_x_continuous(breaks=seq(0,100,2))
+```
+
+## P-hacking
+
++ Selective reporting of significant results
++ Deciding whether to keep collecting data partway through experiment/trial
++ Recording many outcomes and deciding which to report post-hoc
++ Deciding whether to include/drop outliers post-hoc
++ Performing (or not performing) subgroup analyses post-hoc
+
+
+# Study design
+. . . 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+![Randomized (controlled) trials](figs/dice.jpeg)
+:::
+
+::: {.column width="50%"}
+![Observational studies: cohort, case-control](figs/obs.jpeg)
+:::
+
+::::
+
+
+## RCTs {.smaller}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+![Farber, *N Egnl J Med*, 2022](figs/rct.png)
+:::
+
+::: {.column width="50%"}
+
++ Enroll individuals randomize to treatment or control group 
++ Follow over time and assess outcome
++ If possible, use placebo for control group; blind participants and clinicians 
+  + Incidence of major adverse event or death lower in surgical group among patients with "adequate great saphenous vein for surgical revascularization" (cohort 1)
+  + In cohort two, outcomes were similar 
+  
+:::
+
+::::
+
+
+
+## Prospective cohort studies  {.smaller}
+:::: {.columns}
+
+::: {.column width="50%"}
+![Outcomes of Vascular and Endovascular Interventions Performed During the Coronavirus Disease 2019 (COVID-19) Pandemic, Benson, *Ann Surg*, 2021](figs/pro2.png)
+:::
+
+::: {.column width="50%"}
++ Enroll individuals free of outcome, follow and assess outcome 
+  + Enroll individuals before vascular surgery
+  + Assess mortality
+  + Control for confounding with multivariate logistic regression
+  + COPD, lower respiratory infections positively associated with mortality, elective caes, use of oral anticoagulants and antiplatelets associated with lower mortality
+  
+
+:::
+
+::::
+
+## Retrospective cohort studies  {.smaller}
+:::: {.columns}
+
+::: {.column width="55%"}
+![Long-Term Outcomes of Abdominal Aortic
+Aneurysm in the Medicare Population, Schemerhorn, *N Engl J Med*, 2015](figs/retro.png){width="88%" fig-align="left"}
+:::
+
+::: {.column width="45%"}
++ Population of interest is identified, exposure status is retroactively determined
+  + Population: Medicare patients who had abdominal aortic aneurysm repair
+  + Exposure: open or endovascular repair
+  + Outcome: mortality/complications
+  + Control for confounding with propensity score matching 
+  + Higher survival but higher rates of late rupture in endovascular repair compared to open repair
+
+:::
+
+::::
+
+
+## Comparison: confounding {.smaller}
+
++ RCTs
+    + Randomization ensures prognosis or disease severity don't influence treatment 
+    + Confounding variables are balanced (on average) between groups
++ Cohort studies
+  + Adjust for confounding with multivariable regression, matching, or stratification
+  + Cannot address unmeasured confounding variables 
+
+## Comparison: validity {.smaller}
+
++ RCTs
+    + Internally valid, but may not generalize if target population $\neq$ study population
+    + Often the case due to strict inclusion criteria ("Patients were excluded from the trial if they had excessive risk associated with open vascular surgery")
++ Cohort studies
+  + More likely to be externally valid ("real world data")
+  + Confounding, information bias (incorrect assessment of exposure, outcome, or both) can affect internal validity 
+
+
+## Comparison: loss to follow up (LTFU) or poor compliance {.smaller}
+
+
++ Both RCTs and cohort studies: 
+  + Often associated with outcome, exposure, or both
+    + I.e. side effects of treatment, death, or cure 
+    + "Final" outcome can't be assessed
+  + Depending on relationship between LTFU (compliance), exposure, outcome can lead to loss of power or bias 
++ Strategies to minimize/address
+  + Study design
+  + Reporting of LTFU and potential implications 
++ Fong, *J Am Heart Assoc*, 2020 found 16$\%$ of cardiovascular RCTs could have a change in primary outcome if "plausible assumptions are made about differential event rates of participants lost to follow up"
+
+## Comparison: selection bias 
+
++ Both RCTs and cohort studies:
+  + Possible depending on recruitment strategy/cohort selection
+  + Healthy worker effect
+  + Conditioning on hospitalization (i.e. association between peripheral vascular disease and  orthopedic injuries)
+  + Women excluded from PAD research^[Vavra, *Women's Health (Lond)*, 2009]
+
+
+## Case study: paclitaxel-cotaed balloons and stents^[Kabeil, *Seminars in Vascular Surgery*, 2022] {.smaller}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+![Katsanos, *J Am Heart*, 2018](figs/pcb1.png)
+::: 
+
+
+::: {.column width="50%"}
+![Risk of all-cause death at $\color{red}{1.68}$ times higher in PCD group at 2 years and $\color{red}{1.93}$ times higher at 5 years](figs/pcb2.png)
+::: 
+
+:::: 
+
+---
+
+##  FDA safety alert 
+
+![](figs/fda.png)
+
+----
+
+## Cohort studies to the rescue!  {.smaller}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+![](figs/pcd3.png)
+
+::: 
+
+::: {.column width="50%"}
++ Retrospective analysis of insurance claims matched patients^[Behrendt, *Eur J Vasc Endovasc Surg*, 2020]
+    + PCDs associated with increased long term survival, lower amputation rates, lower cardiovascular events 
++ Retrospective analysis of Medicare data^[Long, *Am Heart J*, 2019]
+    + PCDs associated with better survival at 2 years, clinical outcomes at 1 year 
+ Internal external validity tradeoff 
+
+:::
+
+:::: 
+
+
+## References {.scrollable .smaller}
+::: {.nonincremental}
+
+1. Mahmood Kabeil, Riley Gillette, Ethan Moore, Robert F. Cuff, Jason Chuen, Max V. Wohlauer, A primer on cohort studies in vascular surgery research, *Seminars in Vascular Surgery*, Volume 35, Issue 4, 2022, Pages 404-412, ISSN 0895-7967, <https://doi.org/10.1053/j.semvascsurg.2022.09.004>
+
+2. Casscells, W., Schoenberger, A., & Graboys, T. B. (1978). Interpretation by physicians of clinical laboratory results. *The New England journal of medicine*, 299(18), 999–1001. <https://doi.org/10.1056/NEJM197811022991808>
+
+3. Tigges, S. Papa & Papa Bear’s medical statistics short course. *Radiopaedia*. <https://radiopaedia.org/courses/medical-statistics-short-course>
+
+4. Sahagun, B.E., Williams, C. & Su, M.K. Biostatistics and Epidemiology Principles for the Toxicologist: The “Testy” Test Characteristics Part I—Sensitivity and Specificity. *J. Med. Toxicol*. 19, 40–44 (2023). <https://doi.org/10.1007/s13181-022-00916-0>
+
+:::
+
+## Articles included {.smaller .smaller}
+
+::: {.nonincremental}
+
+
++ Leinweber, M. E., Geisbuesch, P., Balzer, K., Schmandra, T., Karl, T., Popp, S., Hoffmann, J., Schmitz-Rixen, T., Jung, G., POPART Registry Collaborators, Oikonomou, K., Storck, M., Balzer, K., Kugelmann, U., Schneider, C., Engelhardt, M., Petzold, M., Weis-Mueller, B., Wortmann, M., Popp, S., … Bail, D. (2023). Sex disparities in popliteal artery aneurysms. *Journal of vascular surgery*, S0741-5214(23)02437-0. <https://doi.org/10.1016/j.jvs.2023.12.036>
++ Farber, A., Menard, M. T., Conte, M. S., Kaufman, J. A., Powell, R. J., Choudhry, N. K., Hamza, T. H., Assmann, S. F., Creager, M. A., Cziraky, M. J., Dake, M. D., Jaff, M. R., Reid, D., Siami, F. S., Sopko, G., White, C. J., van Over, M., Strong, M. B., Villarreal, M. F., McKean, M., … BEST-CLI Investigators (2022). Surgery or Endovascular Therapy for Chronic Limb-Threatening Ischemia. *The New England journal of medicine*, 387(25), 2305–2316. <https://doi.org/10.1056/NEJMoa2207899>
++ Benson, R. A., & Nandhra, S. (2021). Outcomes of Vascular and Endovascular Interventions Performed During the Coronavirus Disease 2019 (COVID-19) Pandemic. *Annals of surgery*, 273(4), 630–635. <https://doi.org/10.1097/SLA.0000000000004722>
+::: 
+
+## Articles included {.smaller .smaller}
+::: {.nonincremental}
+
++ Schermerhorn, M. L., Buck, D. B., O'Malley, A. J., Curran, T., McCallum, J. C., Darling, J., & Landon, B. E. (2015). Long-Term Outcomes of Abdominal Aortic Aneurysm in the Medicare Population. *The New England journal of medicine*, 373(4), 328–338. <https://doi.org/10.1056/NEJMoa1405778>
++ Fong LCW, Ford TJ, da Costa BR, Jüni P, Berry C. Bias and Loss to Follow-Up in Cardiovascular Randomized Trials: A Systematic Review. *J Am Heart Assoc.* 2020 Jul 21;9(14):e015361. doi: 10.1161/JAHA.119.015361. Epub 2020 Jul 9. PMID: 32646264; PMCID: PMC7660731.
++ Katsanos, K., Spiliopoulos, S., Kitrou, P., Krokidis, M., & Karnabatidis, D. (2018). Risk of Death Following Application of Paclitaxel-Coated Balloons and Stents in the Femoropopliteal Artery of the Leg: A Systematic Review and Meta-Analysis of Randomized Controlled Trials. *Journal of the American Heart Association*, 7(24), e011245. <https://doi.org/10.1161/JAHA.118.011245>
+:::
+
+## Articles included {.smaller .smaller}
+::: {.nonincremental}
++ Behrendt, C. A., Sedrakyan, A., Peters, F., Kreutzburg, T., Schermerhorn, M., Bertges, D. J., Larena-Avellaneda, A., L'Hoest, H., Kölbel, T., & Debus, E. S. (2020). Editor's Choice - Long Term Survival after Femoropopliteal Artery Revascularisation with Paclitaxel Coated Devices: A Propensity Score Matched Cohort Analysis. *European journal of vascular and endovascular surgery : the official journal of the European Society for Vascular Surgery*, 59(4), 587–596. <https://doi.org/10.1016/j.ejvs.2019.12.034>
++ Long, C. A., Zepel, L., Greiner, M. A., Hammill, B. G., Patel, M. R., & Jones, W. S. (2019). Use and 1-year outcomes with conventional and drug-coated balloon angioplasty in patients with lower extremity peripheral artery disease. *American heart journal*, 217, 42–51. ,https://doi.org/10.1016/j.ahj.2019.07.014>
++ Freisinger, E., Koeppe, J., Gerss, J., Goerlich, D., Malyar, N. M., Marschall, U., Faldum, A., & Reinecke, H. (2020). Mortality after use of paclitaxel-based devices in peripheral arteries: a real-world safety analysis. *European heart journal*, 41(38), 3732–3739. <https://doi.org/10.1093/eurheartj/ehz698>
+
+:::
+

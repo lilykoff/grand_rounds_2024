@@ -31,6 +31,11 @@ date: "March 8 2024"
 :::
 ::::
 
+## Follow along 
+
+![Link to slides: <https://lilykoff.github.io/grand_rounds_2024/>](figs/GrandRounds.png){fig-align="left"}
+
+
 ## Tests {.smaller}
 
 :::: {.columns}

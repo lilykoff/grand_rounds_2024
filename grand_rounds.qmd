@@ -12,7 +12,7 @@ format:
     progress: true
     incremental: true
 author: "Lily Koffman" 
-date: "March 2024"
+date: "March 8 2024"
 ---
 
 ## Introduction
@@ -50,10 +50,10 @@ date: "March 2024"
 
 
 + Sensitivity: how good is a test at identifying the sick? 
-  + Probability that test is positive if person is sick (TP/(TP + FN))
+  + Probability that test is positive if person is sick TP/(TP + FN)
   + False negative rate: 1-sensitivity 
 + Specificity: how good is a test at identifying the healthy? 
-  + Probability test is negative if person is healthy (TN/(FN + TN))
+  + Probability test is negative if person is healthy TN/(FN + TN)
   + False positive rate: 1-specificity
   
 :::
@@ -407,7 +407,7 @@ df2 %>%
 
 # P-values  
 
-![<https://xkcd.com/1478/>](figs/p_values.png)
+![<https://xkcd.com/1478/>](figs/p_values.png){fig-align="left"}
 
 ## P-values in the wild 
 
@@ -417,7 +417,7 @@ df2 %>%
 ## P-values in the wild
 
 
-![](figs/paper copy.png)
+![Leinweiber, *J Vasc Surg*, 2023](figs/paper copy.png)
 
 ---
 
@@ -573,16 +573,14 @@ df %>%
 
 ::: {.column width="50%"}
 
-![Farber, *N Egnl J Med*, 2022](figs/rct.png)
+![Farber, *N Engl J Med*, 2022](figs/rct.png){fig-align="left"}
 :::
 
 ::: {.column width="50%"}
 
-+ Enroll individuals randomize to treatment or control group 
++ Enroll individuals and randomize to treatment or control group 
 + Follow over time and assess outcome
-+ If possible, use placebo for control group; blind participants and clinicians 
-  + Incidence of major adverse event or death lower in surgical group among patients with "adequate great saphenous vein for surgical revascularization" (cohort 1)
-  + In cohort two, outcomes were similar 
+
   
 :::
 
@@ -594,16 +592,13 @@ df %>%
 :::: {.columns}
 
 ::: {.column width="50%"}
-![Outcomes of Vascular and Endovascular Interventions Performed During the Coronavirus Disease 2019 (COVID-19) Pandemic, Benson, *Ann Surg*, 2021](figs/pro2.png)
+![Benson, *Ann Surg*, 2021](figs/pro_cohort.png)
 :::
 
 ::: {.column width="50%"}
 + Enroll individuals free of outcome, follow and assess outcome 
   + Enroll individuals before vascular surgery
   + Assess mortality
-  + Control for confounding with multivariate logistic regression
-  + COPD, lower respiratory infections positively associated with mortality, elective caes, use of oral anticoagulants and antiplatelets associated with lower mortality
-  
 
 :::
 
@@ -613,8 +608,7 @@ df %>%
 :::: {.columns}
 
 ::: {.column width="55%"}
-![Long-Term Outcomes of Abdominal Aortic
-Aneurysm in the Medicare Population, Schemerhorn, *N Engl J Med*, 2015](figs/retro.png){width="88%" fig-align="left"}
+![Schermerhorn, *N Engl J Med*, 2015](figs/retro_cohort.png){width="88%" fig-align="left"}
 :::
 
 ::: {.column width="45%"}
@@ -622,28 +616,25 @@ Aneurysm in the Medicare Population, Schemerhorn, *N Engl J Med*, 2015](figs/ret
   + Population: Medicare patients who had abdominal aortic aneurysm repair
   + Exposure: open or endovascular repair
   + Outcome: mortality/complications
-  + Control for confounding with propensity score matching 
-  + Higher survival but higher rates of late rupture in endovascular repair compared to open repair
 
 :::
 
 ::::
 
 
-## Comparison: confounding {.smaller}
+## Comparison: confounding 
 
 + RCTs
-    + Randomization ensures prognosis or disease severity don't influence treatment 
-    + Confounding variables are balanced (on average) between groups
+    + Randomization ensures are balanced (on average) between groups
 + Cohort studies
   + Adjust for confounding with multivariable regression, matching, or stratification
   + Cannot address unmeasured confounding variables 
 
-## Comparison: validity {.smaller}
+## Comparison: validity 
 
 + RCTs
     + Internally valid, but may not generalize if target population $\neq$ study population
-    + Often the case due to strict inclusion criteria ("Patients were excluded from the trial if they had excessive risk associated with open vascular surgery")
+    + Strict inclusion criteria ("Patients were excluded from the trial if they had excessive risk associated with open vascular surgery")
 + Cohort studies
   + More likely to be externally valid ("real world data")
   + Confounding, information bias (incorrect assessment of exposure, outcome, or both) can affect internal validity 
@@ -656,8 +647,8 @@ Aneurysm in the Medicare Population, Schemerhorn, *N Engl J Med*, 2015](figs/ret
   + Often associated with outcome, exposure, or both
     + I.e. side effects of treatment, death, or cure 
     + "Final" outcome can't be assessed
-  + Depending on relationship between LTFU (compliance), exposure, outcome can lead to loss of power or bias 
-+ Strategies to minimize/address
+  + Loss of power or bias 
++ Strategies to minimize
   + Study design
   + Reporting of LTFU and potential implications 
 + Fong, *J Am Heart Assoc*, 2020 found 16$\%$ of cardiovascular RCTs could have a change in primary outcome if "plausible assumptions are made about differential event rates of participants lost to follow up"
@@ -666,9 +657,9 @@ Aneurysm in the Medicare Population, Schemerhorn, *N Engl J Med*, 2015](figs/ret
 
 + Both RCTs and cohort studies:
   + Possible depending on recruitment strategy/cohort selection
-  + Healthy worker effect
-  + Conditioning on hospitalization (i.e. association between peripheral vascular disease and  orthopedic injuries)
-  + Women excluded from PAD research^[Vavra, *Women's Health (Lond)*, 2009]
+  + Examples: 
+    + Association between peripheral vascular disease and orthopedic injuries due to selection of hospitalized individuals^[Kabeil, *Seminars in Vascular Surgery*, 2022]
+  + Exclusion of women from PAD research^[Vavra, *Women's Health (Lond)*, 2009]
 
 
 ## Case study: paclitaxel-cotaed balloons and stents^[Kabeil, *Seminars in Vascular Surgery*, 2022] {.smaller}
@@ -676,12 +667,12 @@ Aneurysm in the Medicare Population, Schemerhorn, *N Engl J Med*, 2015](figs/ret
 :::: {.columns}
 
 ::: {.column width="50%"}
-![Katsanos, *J Am Heart*, 2018](figs/pcb1.png)
+![Katsanos, *J Am Heart*, 2018](figs/pcb1.png){fig-align="left"}
 ::: 
 
 
 ::: {.column width="50%"}
-![Risk of all-cause death at $\color{red}{1.68}$ times higher in PCD group at 2 years and $\color{red}{1.93}$ times higher at 5 years](figs/pcb2.png)
+![Risk of all-cause death $\color{red}{1.68}$ times higher in PCD group at 2 years and $\color{red}{1.93}$ times higher at 5 years](figs/pcb2.png)
 ::: 
 
 :::: 
@@ -706,10 +697,9 @@ Aneurysm in the Medicare Population, Schemerhorn, *N Engl J Med*, 2015](figs/ret
 
 ::: {.column width="50%"}
 + Retrospective analysis of insurance claims matched patients^[Behrendt, *Eur J Vasc Endovasc Surg*, 2020]
-    + PCDs associated with increased long term survival, lower amputation rates, lower cardiovascular events 
+    + Paclitaxel-coated balloons associated with increased long term survival, lower amputation rates, lower cardiovascular events 
 + Retrospective analysis of Medicare data^[Long, *Am Heart J*, 2019]
-    + PCDs associated with better survival at 2 years, clinical outcomes at 1 year 
- Internal external validity tradeoff 
+    + Paclitaxel-coated balloons associated with better survival at 2 years, clinical outcomes at 1 year 
 
 :::
 

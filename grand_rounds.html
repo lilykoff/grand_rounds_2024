@@ -334,7 +334,7 @@ Lily Koffman
 </div>
 </div>
 
-  <p class="date">3/1/24</p>
+  <p class="date">3/8/24</p>
 </section>
 <section id="introduction" class="slide level2">
 <h2>Introduction</h2>
@@ -365,12 +365,12 @@ Lily Koffman
 <ul>
 <li class="fragment">Sensitivity: how good is a test at identifying the sick?
 <ul>
-<li class="fragment">Probability that test is positive if person is sick (TP/(TP + FN))</li>
+<li class="fragment">Probability that test is positive if person is sick TP/(TP + FN)</li>
 <li class="fragment">False negative rate: 1-sensitivity</li>
 </ul></li>
 <li class="fragment">Specificity: how good is a test at identifying the healthy?
 <ul>
-<li class="fragment">Probability test is negative if person is healthy (TN/(FN + TN))</li>
+<li class="fragment">Probability test is negative if person is healthy TN/(FN + TN)</li>
 <li class="fragment">False positive rate: 1-specificity</li>
 </ul></li>
 </ul>
@@ -500,7 +500,7 @@ Lily Koffman
 <section id="p-values-in-the-wild-1" class="slide level2">
 <h2>P-values in the wild</h2>
 
-<img data-src="figs/paper%20copy.png" class="r-stretch"></section>
+<img data-src="figs/paper%20copy.png" class="r-stretch quarto-figure-center"><p class="caption">Leinweiber, <em>J Vasc Surg</em>, 2023</p></section>
 <section id="how-do-we-get-them" class="slide level2 smaller">
 <h2>How do we get them?</h2>
 <ul>
@@ -565,21 +565,16 @@ Lily Koffman
 <h2>RCTs</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-left">
 <figure>
 <p><img data-src="figs/rct.png"></p>
-<p></p><figcaption>Farber, <em>N Egnl J Med</em>, 2022</figcaption><p></p>
+<p></p><figcaption>Farber, <em>N Engl J Med</em>, 2022</figcaption><p></p>
 </figure>
 </div>
 </div><div class="column" style="width:50%;">
 <ul>
-<li class="fragment">Enroll individuals randomize to treatment or control group</li>
+<li class="fragment">Enroll individuals and randomize to treatment or control group</li>
 <li class="fragment">Follow over time and assess outcome</li>
-<li class="fragment">If possible, use placebo for control group; blind participants and clinicians
-<ul>
-<li class="fragment">Incidence of major adverse event or death lower in surgical group among patients with “adequate great saphenous vein for surgical revascularization” (cohort 1)</li>
-<li class="fragment">In cohort two, outcomes were similar</li>
-</ul></li>
 </ul>
 </div>
 </div>
@@ -590,8 +585,8 @@ Lily Koffman
 <div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="figs/pro2.png"></p>
-<p></p><figcaption>Outcomes of Vascular and Endovascular Interventions Performed During the Coronavirus Disease 2019 (COVID-19) Pandemic, Benson, <em>Ann Surg</em>, 2021</figcaption><p></p>
+<p><img data-src="figs/pro_cohort.png"></p>
+<p></p><figcaption>Benson, <em>Ann Surg</em>, 2021</figcaption><p></p>
 </figure>
 </div>
 </div><div class="column" style="width:50%;">
@@ -600,8 +595,6 @@ Lily Koffman
 <ul>
 <li class="fragment">Enroll individuals before vascular surgery</li>
 <li class="fragment">Assess mortality</li>
-<li class="fragment">Control for confounding with multivariate logistic regression</li>
-<li class="fragment">COPD, lower respiratory infections positively associated with mortality, elective caes, use of oral anticoagulants and antiplatelets associated with lower mortality</li>
 </ul></li>
 </ul>
 </div>
@@ -613,8 +606,8 @@ Lily Koffman
 <div class="column" style="width:55%;">
 <div class="quarto-figure quarto-figure-left">
 <figure>
-<p><img data-src="figs/retro.png" style="width:88.0%"></p>
-<p></p><figcaption>Long-Term Outcomes of Abdominal Aortic Aneurysm in the Medicare Population, Schemerhorn, <em>N Engl J Med</em>, 2015</figcaption><p></p>
+<p><img data-src="figs/retro_cohort.png" style="width:88.0%"></p>
+<p></p><figcaption>Schermerhorn, <em>N Engl J Med</em>, 2015</figcaption><p></p>
 </figure>
 </div>
 </div><div class="column" style="width:45%;">
@@ -624,20 +617,17 @@ Lily Koffman
 <li class="fragment">Population: Medicare patients who had abdominal aortic aneurysm repair</li>
 <li class="fragment">Exposure: open or endovascular repair</li>
 <li class="fragment">Outcome: mortality/complications</li>
-<li class="fragment">Control for confounding with propensity score matching</li>
-<li class="fragment">Higher survival but higher rates of late rupture in endovascular repair compared to open repair</li>
 </ul></li>
 </ul>
 </div>
 </div>
 </section>
-<section id="comparison-confounding" class="slide level2 smaller">
+<section id="comparison-confounding" class="slide level2">
 <h2>Comparison: confounding</h2>
 <ul>
 <li class="fragment">RCTs
 <ul>
-<li class="fragment">Randomization ensures prognosis or disease severity don’t influence treatment</li>
-<li class="fragment">Confounding variables are balanced (on average) between groups</li>
+<li class="fragment">Randomization ensures are balanced (on average) between groups</li>
 </ul></li>
 <li class="fragment">Cohort studies
 <ul>
@@ -646,13 +636,13 @@ Lily Koffman
 </ul></li>
 </ul>
 </section>
-<section id="comparison-validity" class="slide level2 smaller">
+<section id="comparison-validity" class="slide level2">
 <h2>Comparison: validity</h2>
 <ul>
 <li class="fragment">RCTs
 <ul>
 <li class="fragment">Internally valid, but may not generalize if target population <span class="math inline">\(\neq\)</span> study population</li>
-<li class="fragment">Often the case due to strict inclusion criteria (“Patients were excluded from the trial if they had excessive risk associated with open vascular surgery”)</li>
+<li class="fragment">Strict inclusion criteria (“Patients were excluded from the trial if they had excessive risk associated with open vascular surgery”)</li>
 </ul></li>
 <li class="fragment">Cohort studies
 <ul>
@@ -671,9 +661,9 @@ Lily Koffman
 <li class="fragment">I.e. side effects of treatment, death, or cure</li>
 <li class="fragment">“Final” outcome can’t be assessed</li>
 </ul></li>
-<li class="fragment">Depending on relationship between LTFU (compliance), exposure, outcome can lead to loss of power or bias</li>
+<li class="fragment">Loss of power or bias</li>
 </ul></li>
-<li class="fragment">Strategies to minimize/address
+<li class="fragment">Strategies to minimize
 <ul>
 <li class="fragment">Study design</li>
 <li class="fragment">Reporting of LTFU and potential implications</li>
@@ -687,17 +677,19 @@ Lily Koffman
 <li class="fragment">Both RCTs and cohort studies:
 <ul>
 <li class="fragment">Possible depending on recruitment strategy/cohort selection</li>
-<li class="fragment">Healthy worker effect</li>
-<li class="fragment">Conditioning on hospitalization (i.e.&nbsp;association between peripheral vascular disease and orthopedic injuries)</li>
-<li class="fragment">Women excluded from PAD research<sup>1</sup></li>
+<li class="fragment">Examples:
+<ul>
+<li class="fragment">Association between peripheral vascular disease and orthopedic injuries due to selection of hospitalized individuals<sup>1</sup></li>
+</ul></li>
+<li class="fragment">Exclusion of women from PAD research<sup>2</sup></li>
 </ul></li>
 </ul>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>Vavra, <em>Women’s Health (Lond)</em>, 2009</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>Kabeil, <em>Seminars in Vascular Surgery</em>, 2022</p></li><li id="fn2"><p>Vavra, <em>Women’s Health (Lond)</em>, 2009</p></li></ol></aside></section>
 <section id="case-study-paclitaxel-cotaed-balloons-and-stents" class="slide level2 smaller">
 <h2>Case study: paclitaxel-cotaed balloons and stents<sup>1</sup></h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-left">
 <figure>
 <p><img data-src="figs/pcb1.png"></p>
 <p></p><figcaption>Katsanos, <em>J Am Heart</em>, 2018</figcaption><p></p>
@@ -707,12 +699,12 @@ Lily Koffman
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="figs/pcb2.png"></p>
-<p></p><figcaption>Risk of all-cause death at <span class="math inline">\(\color{red}{1.68}\)</span> times higher in PCD group at 2 years and <span class="math inline">\(\color{red}{1.93}\)</span> times higher at 5 years</figcaption><p></p>
+<p></p><figcaption>Risk of all-cause death <span class="math inline">\(\color{red}{1.68}\)</span> times higher in PCD group at 2 years and <span class="math inline">\(\color{red}{1.93}\)</span> times higher at 5 years</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn2"><p>Kabeil, <em>Seminars in Vascular Surgery</em>, 2022</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn3"><p>Kabeil, <em>Seminars in Vascular Surgery</em>, 2022</p></li></ol></aside></section>
 <section id="fda-safety-alert" class="slide level2">
 <h2>FDA safety alert</h2>
 
@@ -726,16 +718,16 @@ Lily Koffman
 <ul>
 <li class="fragment">Retrospective analysis of insurance claims matched patients<sup>1</sup>
 <ul>
-<li class="fragment">PCDs associated with increased long term survival, lower amputation rates, lower cardiovascular events</li>
+<li class="fragment">Paclitaxel-coated balloons associated with increased long term survival, lower amputation rates, lower cardiovascular events</li>
 </ul></li>
 <li class="fragment">Retrospective analysis of Medicare data<sup>2</sup>
 <ul>
-<li class="fragment">PCDs associated with better survival at 2 years, clinical outcomes at 1 year Internal external validity tradeoff</li>
+<li class="fragment">Paclitaxel-coated balloons associated with better survival at 2 years, clinical outcomes at 1 year</li>
 </ul></li>
 </ul>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn3"><p>Behrendt, <em>Eur J Vasc Endovasc Surg</em>, 2020</p></li><li id="fn4"><p>Long, <em>Am Heart J</em>, 2019</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn4"><p>Behrendt, <em>Eur J Vasc Endovasc Surg</em>, 2020</p></li><li id="fn5"><p>Long, <em>Am Heart J</em>, 2019</p></li></ol></aside></section>
 <section id="references" class="slide level2 scrollable smaller">
 <h2>References</h2>
 <div>

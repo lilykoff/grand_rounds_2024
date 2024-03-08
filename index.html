@@ -380,7 +380,7 @@ Lily Koffman
 </ul></li>
 <li class="fragment">Specificity: how good is a test at identifying the healthy?
 <ul>
-<li class="fragment">Probability test is negative if person is healthy TN/(FN + TN)</li>
+<li class="fragment">Probability test is negative if person is healthy TN/(TN + FP)</li>
 <li class="fragment">False positive rate: 1-specificity</li>
 </ul></li>
 </ul>
@@ -444,7 +444,7 @@ Lily Koffman
 <li class="fragment">PPV: how often someone who tests positive is actually sick</li>
 <li class="fragment">NPV: how often someone who tests negative is actually healthy</li>
 <li class="fragment">Both depend on prevalence</li>
-<li class="fragment">As prevalence increases, NPV <span class="math inline">\(\uparrow\)</span>, PPV <span class="math inline">\(\downarrow\)</span></li>
+<li class="fragment">As prevalence increases, NPV <span class="math inline">\(\downarrow\)</span>, PPV <span class="math inline">\(\uparrow\)</span></li>
 </ul>
 </section>
 <section id="illustration-with-increased-prevalence" class="slide level2">
@@ -510,7 +510,7 @@ Lily Koffman
 <section id="p-values-in-the-wild-1" class="slide level2">
 <h2>P-values in the wild</h2>
 
-<img data-src="figs/paper%20copy.png" class="r-stretch quarto-figure-center"><p class="caption">Leinweiber, <em>J Vasc Surg</em>, 2023</p></section>
+<img data-src="figs/paper%20copy.png" class="r-stretch quarto-figure-left"><p class="caption">Leinweiber, <em>J Vasc Surg</em>, 2023</p></section>
 <section id="how-do-we-get-them" class="slide level2 smaller">
 <h2>How do we get them?</h2>
 <ul>
@@ -520,9 +520,9 @@ Lily Koffman
 </ul></li>
 <li class="fragment">Compare the groups
 <ul>
-<li class="fragment">In this case: compare aneurysm size</li>
+<li class="fragment">In this case: compare mean aneurysm size</li>
 </ul></li>
-<li class="fragment">Calculate probability of observing difference (or larger difference) than what we observe, <strong>assuming there is no true difference between the groups</strong></li>
+<li class="fragment">Calculate probability of observing difference at least as large as the difference we observe, <strong>assuming there is no true difference between the groups</strong></li>
 <li class="fragment">If the probability is small, reject the null and have evidence that there is a difference in means between the groups</li>
 </ul>
 </section>
@@ -564,7 +564,7 @@ Lily Koffman
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="figs/obs.jpeg"></p>
-<p></p><figcaption>Observational studies: cohort, case-control</figcaption><p></p>
+<p></p><figcaption>Observational studies</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -583,8 +583,14 @@ Lily Koffman
 </div>
 </div><div class="column" style="width:50%;">
 <ul>
-<li class="fragment">Enroll individuals and randomize to treatment or control group</li>
-<li class="fragment">Follow over time and assess outcome</li>
+<li class="fragment">Enroll individuals and randomize to treatment or control group
+<ul>
+<li class="fragment">Endovascular therapy vs.&nbsp;revascularization</li>
+</ul></li>
+<li class="fragment">Follow over time and assess outcome
+<ul>
+<li class="fragment">Amputation, major limb reintervention, or death</li>
+</ul></li>
 </ul>
 </div>
 </div>
@@ -637,7 +643,7 @@ Lily Koffman
 <ul>
 <li class="fragment">RCTs
 <ul>
-<li class="fragment">Randomization ensures are balanced (on average) between groups</li>
+<li class="fragment">Randomization ensures confounders are balanced (on average) between groups</li>
 </ul></li>
 <li class="fragment">Cohort studies
 <ul>
@@ -666,10 +672,10 @@ Lily Koffman
 <ul>
 <li class="fragment">Both RCTs and cohort studies:
 <ul>
-<li class="fragment">Often associated with outcome, exposure, or both
+<li class="fragment">LTFU often associated with outcome, exposure, or both
 <ul>
-<li class="fragment">I.e. side effects of treatment, death, or cure</li>
-<li class="fragment">“Final” outcome can’t be assessed</li>
+<li class="fragment">I.e. side effects of treatment or severity of disease</li>
+<li class="fragment">“Final” outcome can’t be assessed if LTFU</li>
 </ul></li>
 <li class="fragment">Loss of power or bias</li>
 </ul></li>
@@ -686,8 +692,7 @@ Lily Koffman
 <ul>
 <li class="fragment">Both RCTs and cohort studies:
 <ul>
-<li class="fragment">Possible depending on recruitment strategy/cohort selection</li>
-<li class="fragment">Examples:
+<li class="fragment">Possible depending on recruitment strategy/cohort selection
 <ul>
 <li class="fragment">Association between peripheral vascular disease and orthopedic injuries due to selection of hospitalized individuals<sup>1</sup></li>
 </ul></li>
@@ -695,8 +700,8 @@ Lily Koffman
 </ul></li>
 </ul>
 <aside><ol class="aside-footnotes"><li id="fn1"><p>Kabeil, <em>Seminars in Vascular Surgery</em>, 2022</p></li><li id="fn2"><p>Vavra, <em>Women’s Health (Lond)</em>, 2009</p></li></ol></aside></section>
-<section id="case-study-paclitaxel-cotaed-balloons-and-stents" class="slide level2 smaller">
-<h2>Case study: paclitaxel-cotaed balloons and stents<sup>1</sup></h2>
+<section id="case-study-paclitaxel-coated-balloons-and-stents" class="slide level2 smaller">
+<h2>Case study: paclitaxel-coated balloons and stents<sup>1</sup></h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-left">
@@ -709,7 +714,7 @@ Lily Koffman
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="figs/pcb2.png"></p>
-<p></p><figcaption>Risk of all-cause death <span class="math inline">\(\color{red}{1.68}\)</span> times higher in PCD group at 2 years and <span class="math inline">\(\color{red}{1.93}\)</span> times higher at 5 years</figcaption><p></p>
+<p></p><figcaption>Risk of all-cause death <span class="math inline">\(\color{red}{1.68}\)</span> times higher in pactlitaxel group at 2 years and <span class="math inline">\(\color{red}{1.93}\)</span> times higher at 5 years</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -726,9 +731,9 @@ Lily Koffman
 <p><img data-src="figs/pcd3.png"></p>
 </div><div class="column" style="width:50%;">
 <ul>
-<li class="fragment">Retrospective analysis of insurance claims matched patients<sup>1</sup>
+<li class="fragment">Retrospective analysis of insurance claims-matched patients<sup>1</sup>
 <ul>
-<li class="fragment">Paclitaxel-coated balloons associated with increased long term survival, lower amputation rates, lower cardiovascular events</li>
+<li class="fragment">Paclitaxel-coated balloons associated with increased long term survival, lower amputation rates, lower cardiovascular event rate</li>
 </ul></li>
 <li class="fragment">Retrospective analysis of Medicare data<sup>2</sup>
 <ul>
